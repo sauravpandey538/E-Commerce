@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Text,
@@ -6,21 +6,27 @@ import {
   Button,
   useBreakpointValue,
   Input,
+  Card,
+  Image,
 } from "@chakra-ui/react";
 import Icons from "../Helper/Icons";
 import { LuShoppingCart } from "react-icons/lu";
 import { IoMdSearch } from "react-icons/io";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { AppContext } from "../src/App";
 
 function Navigation() {
-  const [items, setItems] = useState(0);
+  const { products } = useContext(AppContext);
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   const device = useBreakpointValue({
     base: "base",
     sm: "sm",
     md: "md",
     lg: "lg",
   });
+
   return (
     <Flex
       w={"100%"}
@@ -92,7 +98,7 @@ function Navigation() {
           <Icons name={IoMdSearch} />
         </Flex>
         <Flex position={"relative"}>
-          <Box>
+          <Box onClick={() => setOpenDrawer(!openDrawer)}>
             <Icons name={LuShoppingCart} />
           </Box>
           <Box
@@ -108,8 +114,52 @@ function Navigation() {
             borderRadius={"50%"}
             bgColor={"gray.800"}
           >
-            {items}
+            {products.length}
           </Box>
+          {openDrawer && (
+            <Card
+              display={"flex"}
+              position={"fixed"}
+              top={"70px"}
+              right={0}
+              h={"90vh"}
+              w={"50vw"}
+              direction={"column"}
+              border={"2px solid black"}
+              p={"30px"}
+              overflow={"scroll"}
+            >
+              {products.map((product, index) => (
+                <Flex
+                  key={index}
+                  bg={"white"}
+                  h={"auto"}
+                  borderBottom={"1px solid gray"}
+                  my={"10px"}
+                  position={"relative"}
+                >
+                  <Box>
+                    <Image
+                      src={product.Image}
+                      boxSize="100px"
+                      objectFit="cover"
+                    />
+                  </Box>
+                  <Flex direction={"column"}>
+                    <Text>{product.Title}</Text>
+                    <Flex gap={5} fontWeight={500}>
+                      <Text>Total : ${product.Total}</Text>
+                      <Text>Quantity : {product.quantity}</Text>
+                    </Flex>
+                    <Flex position={"absolute"} bottom={0} right={0} gap={2}>
+                      <Button>Pay</Button>
+                      <Button>Delete</Button>
+                    </Flex>
+                  </Flex>
+                </Flex>
+              ))}{" "}
+            </Card>
+          )}
         </Flex>
       </Flex>
     </Flex>

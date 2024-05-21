@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Box, Flex, Text, Button, Card, Spinner, Icon } from "@chakra-ui/react";
 import ProductImageSlider from "./ProductImageSlider";
@@ -12,6 +12,7 @@ import { VscWorkspaceTrusted } from "react-icons/vsc";
 import Icons from "./Icons";
 import { CiLocationOn } from "react-icons/ci";
 import { IoMdArrowDropupCircle } from "react-icons/io";
+import { AppContext } from "../src/App";
 
 function SingleProduct() {
   const [quantity, setQuantity] = useState(1);
@@ -19,6 +20,7 @@ function SingleProduct() {
   const [fav, setFav] = useState(false);
   const [openDealer, SetOpenDelear] = useState(false);
   const { id } = useParams();
+  const { addProduct } = useContext(AppContext);
 
   useEffect(() => {
     axios
@@ -224,6 +226,15 @@ function SingleProduct() {
               variant="solid"
               color={"white"}
               bg={"gray.600"}
+              onClick={() => {
+                addProduct({
+                  id,
+                  quantity,
+                  Total: quantity * data.price,
+                  Image: data.image,
+                  Title: data.title,
+                });
+              }}
             >
               Add to cart
             </Button>
