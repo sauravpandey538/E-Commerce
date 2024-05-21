@@ -27,7 +27,7 @@ function Catagories() {
           size={["sm", "md"]}
           variant="link"
           as={Link}
-          to="/jewellery"
+          to="/category/jewelery"
           bg={"white"}
           color={"black"}
         >
@@ -45,7 +45,7 @@ function Catagories() {
             size={["sm", "md"]}
             variant="link"
             as={Link}
-            to="/men"
+            to="/category/men's%20clothing"
             bg={"white"}
             color={"black"}
           >
@@ -67,7 +67,7 @@ function Catagories() {
             size={["sm", "md"]}
             variant="link"
             as={Link}
-            to="/women"
+            to="/category/women's%20clothing"
             bg={"white"}
             color={"black"}
           >

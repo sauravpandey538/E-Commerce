@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  Box,
-  Flex,
-  Image,
-  Text,
-  Button,
-  Spinner,
-  Card,
-  Link,
-} from "@chakra-ui/react";
+import { Box, Flex, Image, Text, Spinner, Card, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-function WomenMainPage() {
+
+function ApiCallByCategory() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { category } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     axios
-      .get("https://fakestoreapi.com/products/category/women's%20clothing")
+      .get(
+        `https://fakestoreapi.com/products/category/${encodeURIComponent(
+          category
+        )}`
+      )
       .then((res) => {
         const truncatedData = res.data.map((item) => ({
           ...item,
-          title: `${item.title.slice(0, -3)}...`,
+          title: `${item.title.slice(0, 20)}...`, // Adjust truncation length as needed
         }));
         setData(truncatedData);
         setLoading(false);
@@ -31,7 +30,7 @@ function WomenMainPage() {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [category]); // Add category to dependency array
 
   if (loading) {
     return (
@@ -40,6 +39,7 @@ function WomenMainPage() {
       </Box>
     );
   }
+
   if (error) {
     return (
       <Box textAlign="center" mt="20">
@@ -47,17 +47,16 @@ function WomenMainPage() {
       </Box>
     );
   }
-  console.log(data);
 
   return (
     <Box px={["15px", "30px", "80px", "150px"]} py={[null, "20px"]}>
-      <Text py={"40px"}>Home/ Women</Text>
+      <Text py={"40px"}>Home / {category.replace("%20", " ")}</Text>
       <Flex gap={6} flexWrap={"wrap"} justifyContent={"space-between"}>
-        {data.map((data) => (
-          <Card key={data.id} h={"xs"} minW={"2xs"} maxW={"xs"}>
+        {data.map((item) => (
+          <Card key={item.id} h={"xs"} minW={"2xs"} maxW={"xs"}>
             <Box overflow={"hidden"} minH={"80%"}>
               <Image
-                src={data.image}
+                src={item.image}
                 w={"100%"}
                 objectFit={"cover"}
                 h={"100%"}
@@ -72,19 +71,15 @@ function WomenMainPage() {
               <Link
                 color={"gray.700"}
                 isTruncated
-                to="/catagory/product"
+                to={`/category/product/${item.id}`}
                 as={RouterLink}
               >
-                {" "}
-                {data.title}
+                {item.title}
               </Link>
-              <Link
-                fontWeight={700}
-                fontSize={"23px"}
-                to="/catagory/product"
-                as={RouterLink}
-              >
-                ${data.price}
+              <Link to={`/category/product/${item.id}`} as={RouterLink}>
+                <Text fontWeight={700} fontSize={"23px"}>
+                  ${item.price}
+                </Text>
               </Link>
             </Flex>
           </Card>
@@ -94,12 +89,4 @@ function WomenMainPage() {
   );
 }
 
-export default WomenMainPage;
-{
-}
-{
-  /* <Box>
-              <Link> {data.title}</Link>
-              <Link fontWeight={800}> `$${data.price}`</Link>
-            </Box> */
-}
+export default ApiCallByCategory;

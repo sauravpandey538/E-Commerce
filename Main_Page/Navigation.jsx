@@ -52,20 +52,28 @@ function Navigation() {
             <Text pl={"30px"}>Store</Text>
           </Box>
           <Flex gap={12}>
-            <Button colorScheme="black" variant="link" as={Link} to="/women">
+            <Button
+              colorScheme="black"
+              variant="link"
+              as={Link}
+              to="/category/women's%20clothing"
+            >
               Women
-            </Button>
-            <Button colorScheme="black" variant="link" as={Link} to="/men">
-              Men
-            </Button>
-            <Button colorScheme="black" variant="link">
-              Electronics
             </Button>
             <Button
               colorScheme="black"
               variant="link"
               as={Link}
-              to="/jewellery"
+              to="/category/men's%20clothing"
+            >
+              Men
+            </Button>
+
+            <Button
+              colorScheme="black"
+              variant="link"
+              as={Link}
+              to="/category/jewelery"
             >
               Jeweleries
             </Button>

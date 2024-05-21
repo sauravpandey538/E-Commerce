@@ -7,10 +7,8 @@ import BelowNav from "../Main_Page/BelowNav";
 import Catagories from "../Main_Page/Catagories";
 import Contact from "../Main_Page/Contact";
 import Footer from "../Main_Page/Footer";
-import WomenMainPage from "../Women/WomenMainPage";
-import MenMainPage from "../Men/MenMainPage";
-import JewelleryMainPage from "../Jewllery/JewelleryMainPage";
 import SingleProduct from "../Helper/SingleProduct";
+import ApiCallByCatagory from "../Api/ApiCallByCatagory";
 function App() {
   return (
     <Router>
@@ -26,10 +24,8 @@ function App() {
             </>
           }
         />
-        <Route path="/women" element={<WomenMainPage />} />
-        <Route path="/men" element={<MenMainPage />} />
-        <Route path="/jewellery" element={<JewelleryMainPage />} />
-        <Route path="/catagory/product" element={<SingleProduct />} />
+        <Route path="/category/:category" element={<ApiCallByCatagory />} />
+        <Route path="/category/product/:id" element={<SingleProduct />} />
       </Routes>
       <Footer />
     </Router>
