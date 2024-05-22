@@ -11,22 +11,24 @@ function BelowNav() {
         objectFit={"cover"}
         overflow={"hidden"}
       />
-      <Box maxW={"400px"} position={"absolute"} top={"25%"} right={"14%"}>
+      <Box maxW={"400px"} position={"absolute"} top={"25%"} right={"10%"}>
         <Text fontSize={"45px"} textAlign={"center"}>
           Fashion{" "}
         </Text>
         <Text fontSize={"45px"} textAlign={"center"} mt={"-20px"}>
           Store
         </Text>
-        <Button
+        <Text
           color={"white"}
           bg={"gray.800"}
           w={"100%"}
-          mt={"20px"}
+          py={"10px"}
+          px={"10px"}
           _hover={{ bgColor: "none" }}
+          borderRadius={"5px"}
         >
-          Shop Now
-        </Button>
+          Your wallet won't empty
+        </Text>
       </Box>
     </Box>
   );

@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../src/App";
 
 function Navigation() {
-  const { products } = useContext(AppContext);
+  const { products, removeProduct } = useContext(AppContext);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const device = useBreakpointValue({
@@ -26,7 +26,12 @@ function Navigation() {
     md: "md",
     lg: "lg",
   });
-
+  const handleDelete = (indexToDelete) => {
+    const updatedProducts = products.filter(
+      (_, index) => index !== indexToDelete
+    );
+    setProducts(updatedProducts);
+  };
   return (
     <Flex
       w={"100%"}
@@ -88,13 +93,24 @@ function Navigation() {
       )}
       {(device === "base" || device === "sm" || device === "md") && (
         <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
-          <Icons name={PiDotsThreeOutlineVerticalFill} />
+          {/* <Icons name={PiDotsThreeOutlineVerticalFill} /> */}
+          <Box
+            letterSpacing={1.5}
+            color={"gray.600"}
+            fontWeight={500}
+            as={Link}
+            to="/"
+            mr={"10px"}
+          >
+            <Text>Fashion</Text>
+            <Text pl={"30px"}>Store</Text>
+          </Box>
         </Box>
       )}
 
       <Flex alignItems={"center"} gap={3} justifyContent={"center"}>
         <Flex alignItems={"center"} gap={3}>
-          <Input placeholder={"Search by name"} />
+          <Input placeholder={"Not working..."} />
           <Icons name={IoMdSearch} />
         </Flex>
         <Flex position={"relative"}>
@@ -129,6 +145,9 @@ function Navigation() {
               p={"30px"}
               overflow={"scroll"}
             >
+              {products.length === 0 && (
+                <Text textAlign={"center"}>No items has been added</Text>
+              )}
               {products.map((product, index) => (
                 <Flex
                   key={index}
@@ -137,6 +156,7 @@ function Navigation() {
                   borderBottom={"1px solid gray"}
                   my={"10px"}
                   position={"relative"}
+                  flexWrap={"wrap"}
                 >
                   <Box>
                     <Image
@@ -147,13 +167,18 @@ function Navigation() {
                   </Box>
                   <Flex direction={"column"}>
                     <Text>{product.Title}</Text>
-                    <Flex gap={5} fontWeight={500}>
+                    <Flex gap={5} fontWeight={500} flexWrap={"wrap"}>
+                      <Text minW={"fit-content"}>
+                        Quantity : {product.quantity}
+                      </Text>
+
                       <Text>Total : ${product.Total}</Text>
-                      <Text>Quantity : {product.quantity}</Text>
                     </Flex>
-                    <Flex position={"absolute"} bottom={0} right={0} gap={2}>
+                    <Flex position={"relative"} bottom={0} right={0} gap={2}>
                       <Button>Pay</Button>
-                      <Button>Delete</Button>
+                      <Button onClick={() => removeProduct(index)}>
+                        Delete
+                      </Button>
                     </Flex>
                   </Flex>
                 </Flex>

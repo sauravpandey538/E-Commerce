@@ -25,8 +25,17 @@ function AppStore({ children }) {
     [setProducts]
   );
   console.log(products);
+
+  const removeProduct = useCallback(
+    (indexToRemove) => {
+      setProducts((prevProducts) =>
+        prevProducts.filter((_, index) => index !== indexToRemove)
+      );
+    },
+    [setProducts]
+  );
   return (
-    <AppContext.Provider value={{ products, addProduct }}>
+    <AppContext.Provider value={{ products, addProduct, removeProduct }}>
       {children}
     </AppContext.Provider>
   );
