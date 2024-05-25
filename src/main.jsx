@@ -2,11 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { ChakraProvider, Text } from "@chakra-ui/react";
+import SearchContext from "../Api/SearchContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ChakraProvider>
     <React.StrictMode>
-      <App />
+      <SearchContext>
+        <App />
+      </SearchContext>
       <Text
         position={"sticky"}
         bottom={0}
